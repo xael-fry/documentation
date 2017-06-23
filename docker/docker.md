@@ -11,7 +11,14 @@ VBoxManage showvminfo default | grep -i share -A4
 docker-machine start default
 ```
 
+## Operations on containers
 
+### Stop / remove all Docker containers
 
+One liner to stop / remove all of Docker containers:
 
+```batch 
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+```
 
