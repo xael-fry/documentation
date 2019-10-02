@@ -42,31 +42,53 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /project_w/projet/test/
 
 ENTRYPOINT ["mvn", "clean", "verify"]
+```
 
-[ec2-user@ip-10-196-21-20 main]$ docker build -t ach:latest . > /dev/null
-[ec2-user@ip-10-196-21-20 main]$ docker run -it  --rm -v $(pwd):/project -t ach:latest > /dev/null
-
-
--it = 
---rm
-
-
+Build the containers
+```
+docker build -t ach:latest . > /dev/null
+docker run -it  --rm -v $(pwd):/project -t ach:latest > /dev/null
+```
 
 vagrant@docker:/etc$ docker run  --user 1001 -it  --rm -v $(pwd):/project_w -v $HOME/.m2:/root/.m2 -t ach:latest
 
 
 Define Proxy settings
+```
 cd .docker/
    51  touch config.json
    52  nano config.json
+```
 
+```
+{
+ "proxies":
+ {
+   "default":
+   {
+     "httpProxy": "http://frigo.mediametrie.fr:3128",
+     "httpsProxy": "http://frigo.mediametrie.fr:3128",
+     "noProxy": "*.test.example.com,.example2.com"
+   }
+ }
+}
+```
 
+Define zcaler  certificates
+```
+sudo cp /vagrant/host/ZscalerRootCA.crt /usr/local/share/ca-certificates/
+sudo update-ca-certificates
+sudo service docker restart
+```
+ 
+ 
 
 
 Enable userns-remap on the daemon
 
 You can start dockerd with the --userns-remap flag or follow this procedure to configure the daemon using the daemon.json configuration file. The daemon.json method is recommended. If you use the flag, use the following command as a model:
 
+```
 $ dockerd --userns-remap="testuser:testuser"
 
     Edit /etc/docker/daemon.json
@@ -77,15 +99,15 @@ $ dockerd --userns-remap="testuser:testuser"
    
 > sudo touch /etc/docker/daemon.json
 sudo nano /etc/docker/daemon.json
-
+```
 
 Enable user namespaces in /etc/default/docker:
 
+```
 DOCKER_OPTS="--userns-remap=ns1"
+```
 
 Restart daemon service docker restart, ensure /var/lib/docker/500000.500000 directory is created.
-
-
 
 
 docker build --build-arg UID=$UID -t ach:latest . > /dev/null
@@ -94,6 +116,7 @@ docker build --build-arg UID=$UID -t ach:latest . > /dev/null
 
 ----------------------------
 
+````
 FROM ubuntu:latest
 
 ENV http_proxy "http://frigo.mediametrie.fr:3128"
@@ -130,7 +153,7 @@ RUN id
 WORKDIR /project_w/projet/test/
 
 ENTRYPOINT [ "mvn", "clean", "verify"]
-
+```
 ----------------------------
 
 
@@ -139,10 +162,6 @@ ENTRYPOINT [ "mvn", "clean", "verify"]
  
  docker run --user docker:docker -it  --rm -v $(pwd):/project_w -v $HOME/.m2:/home/docker/.m2 -t ach:latest
  
-  agent {
-        dockerfile {
-            args "-v /tmp:/tmp -p 8000:8000"
-            additionalBuildArgs "--build-arg someArg=thisOtherArg"
  
 ``` 
  
