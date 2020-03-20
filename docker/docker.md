@@ -38,6 +38,7 @@ RUN apt-get update && apt-get install -y \
    xvfb \
    libxi6 \
    libgconf-2-4
+   
 
 WORKDIR /project_w/projet/test/
 
@@ -157,11 +158,11 @@ ENTRYPOINT [ "mvn", "clean", "verify"]
 ----------------------------
 
 
+Build container with args for uid / GUID
+```
  docker build --build-arg UID=$(id -u) --build-arg UNAME=docker --build-arg GID=$(id -g) -t ach:latest . > /dev/null
  
- 
  docker run --user docker:docker -it  --rm -v $(pwd):/project_w -v $HOME/.m2:/home/docker/.m2 -t ach:latest
- 
  
 ``` 
  
@@ -182,6 +183,10 @@ docker build --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t test:latest --
 
 
 docker run  -u 1000:1000 -it  --rm  -t test:latest
+
+
+docker run -t -d -u 1000:1000 -w /sample_module -v /workspace/sample_module:/sample_module:rw,z -t test:latest
+
 
 
  docker run -t -d -u 1000:1000 -w /sample_module -v /workspace/sample_module:/sample_module:rw,z -t test:latest

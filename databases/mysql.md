@@ -12,6 +12,16 @@ mysqldump -u root -p --opt --all-databases > alldb.sql
 mysqldump -u root -p --all-databases --skip-lock-tables > alldb.sql
 ```
 
+```sql
+mysql -u <username> -p <databasename> < <filename.sql>
+```
+
+Import of a zip file
+
+```sql
+unzip -p dbdump.sql.zip | mysql -u root -p yourdbname
+```
+
 ## Databases Import:
 
 ```sql

@@ -17,3 +17,21 @@ for (c in creds) {
 }
 
 ```
+
+http://pkg.jenkins-ci.org/redhat-stable/
+
+https://s3.console.aws.amazon.com/s3/buckets/ul-migration/jenkins/?region=eu-west-1&tab=overview
+
+## remove CR from file
+
+```
+sudo tr -d '\r' /etc/resolv.conf > resolv.conf
+
+sudo sed 's/^M$//' /etc/resolv.conf > resolv.conf 
+```
+
+sudo dig +trace www.amazon.com
+
+
+
+

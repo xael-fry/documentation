@@ -41,7 +41,7 @@ docker system prune -a -f
 
 docker info | egrep '^(Server Version|Storage)'
 
-ocker volume prune -f
+docker volume prune -f
 Total reclaimed space: 0 B
 [root@*** ~]# docker system prune -a -f
 Total reclaimed space: 0 B
@@ -56,3 +56,22 @@ Just to keep the record, I have done some clean up using:
 docker volume rm $(docker volume ls -qf dangling=true)
 ```
 This will not delete any container or any volume in use!
+
+
+    Modifier le fichier  /home/jenkins/.ssh/known_hosts en supprimant l entrée
+
+ssh-keygen -R scm.ul.mediametrie.fr
+
+
+ssh-keygen -R [hostname]
+ssh-keygen -R [ip_address]
+ssh-keygen -R [hostname],[ip_address]
+ssh-keyscan -H [hostname],[ip_address] >> ~/.ssh/known_hosts
+ssh-keyscan -H [ip_address] >> ~/.ssh/known_hosts
+ssh-keyscan -H [hostname] >> ~/.ssh/known_hosts
+
+
+
+MM]# nc -zvw 1 dvbdms92.mediametrie.fr 3306
+Connection to dvbdms92.mediametrie.fr 3306 port [tcp/mysql] succeeded!
+[root@gosu appliMM]#
